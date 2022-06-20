@@ -4,10 +4,8 @@
   "description": "Montonio Payments API for NodeJS",
   "main": "./lib/cjs/index.js",
   "module": "./lib/index.js",
-  "types": "./lib/types.d.ts",
   "scripts": {
-    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-    "copy-ts-definitions": "copyfiles -u 1 \"lib/*.d.ts\" lib"
+    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
   },
   "keywords": [
     "montonio",

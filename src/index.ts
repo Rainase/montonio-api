@@ -1,5 +1,5 @@
 import { makePaymentUrl, getMethods } from './methods';
-import { Credentials, LocaleTypes, PaymentMethodsTypes, UserOpts } from './types';
+import { Credentials, PaymentMethodsTypes, UserOpts } from './types';
 
 export const montonioApi = ({
   secrectKey,
@@ -8,5 +8,5 @@ export const montonioApi = ({
 }: Credentials) => ({
   getPaymentUrl: (options: UserOpts) =>
     makePaymentUrl({ secrectKey, accessKey, sandbox }, options),
-  paymentMethods: (lang:LocaleTypes) => getMethods({ secrectKey, accessKey, sandbox }, lang),
+  paymentMethods: (lang:string) => getMethods({ secrectKey, accessKey, sandbox }, lang),
 });

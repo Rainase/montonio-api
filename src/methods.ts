@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { config } from './config';
-import { Credentials, LocaleTypes, PaymentMethodsTypes, UserOpts } from './types';
+import { Credentials, PayloadOpts, UserOpts } from './types';
 export const makePaymentUrl = (
   { secrectKey, accessKey, sandbox }: Credentials,
   {
@@ -9,17 +9,18 @@ export const makePaymentUrl = (
     currency,
     merchant_reference,
     merchant_return_url,
-    merchant_notification_url,
+    preselected_aspsp
   }: UserOpts
 ): string => {
   const baseUrl = sandbox ? config.sandboxUrl : config.productionUrl
-  const payload: UserOpts = {
+  const payload: PayloadOpts = {
     amount: amount,
     currency: currency ? currency : 'EUR',
     merchant_reference: merchant_reference,
     access_key: accessKey,
     merchant_return_url: merchant_return_url,
-    merchant_notification_url: merchant_notification_url,
+    merchant_notification_url: merchant_return_url,
+    preselected_aspsp: preselected_aspsp ? preselected_aspsp : ''
   };
   const token = jwt.sign(payload, secrectKey, {
     algorithm: 'HS256',
@@ -29,7 +30,7 @@ export const makePaymentUrl = (
   return paymentUrl;
 };
 
-export const getMethods = async ({accessKey, secrectKey, sandbox}:Credentials, lang:LocaleTypes) => {
+export const getMethods = async ({accessKey, secrectKey, sandbox}:Credentials, lang:string) => {
   const baseUrl = sandbox ? config.sandboxMethods : config.prodcutionMethods
   try {
     const payload = {
@@ -41,6 +42,7 @@ export const getMethods = async ({accessKey, secrectKey, sandbox}:Credentials, l
     { algorithm: 'HS256', expiresIn: '1h' }
   );
   const resp = await axios(baseUrl, {headers: {'Authorization': `Bearer ${token}`}})
+  if(lang === '') return resp.data
   return resp.data[lang]
   } catch (error) {
   return error
