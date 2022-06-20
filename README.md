@@ -1,4 +1,7 @@
 # montonio-api
+Unofficial API for montonio payment gateway
+
+[Montonio Docs](https://payments-docs.montonio.com/#introduction)
 # Install
 
 ### Install using npm
