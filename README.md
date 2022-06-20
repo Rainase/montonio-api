@@ -6,7 +6,7 @@
 `npm i @offrain/montonio-api`
 
 # Usage
-
+### Bank Payment Methods
 ```js
 import { montonioApi } from '@offrain/montonio-api';
 // Initialize requests with API keys provided from Montonio
@@ -21,7 +21,7 @@ montonio
   .paymentMethods('FI')
   .then((val) => console.log(val))
   .catch((error) => error);
-  
+
 ```
 Returns Array of Bank Payment options
 ```js
@@ -52,6 +52,8 @@ Returns Array of Bank Payment options
 
 - `countryCode` : `EE`, `FI`, `LV` or `LT` _optional, default `EE`
 
+### Create Payment Url
+
 ```js
 montonio.getPaymentUrl({
   amount: 1,
@@ -65,6 +67,7 @@ montonio.getPaymentUrl({
 - `amount` : `Number` Sets price for the gateway
 - `merchant_return_url` : The URL `string` where the customer will be redirected back to after completing or cancelling a payment.
 - `merchant_reference` : The order reference `string` in the merchant's system (e.g. the order ID).
-- `preselected_aspsp` : The bank that the customer chose for this payment if you allow them to select their bank of choice in your checkout. Leave this blank to let the customer choose their bank in [Montonio](https://montonio.com) interface. `_optional`
-  
-```
+- `preselected_aspsp` : The bank that the customer chose for this payment if you allow them to select their bank of choice in your checkout. Leave this blank to let the customer choose their bank in [Montonio](https://montonio.com) interface. `_optional`.
+
+Returns payment url `https://[sandbox-]payments.montonio.com?payment_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`
+
