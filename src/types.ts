@@ -1,9 +1,11 @@
 export interface Credentials {
   accessKey: string
   secrectKey: string
-  sandbox?: boolean
+  sandbox?: Evn | false
 }
-
+export enum Evn {
+  true, false
+}
 export interface SecretOptions {
   access_key: string,
 }
@@ -32,4 +34,13 @@ export interface PayloadOpts {
 }
 export interface PaymentMethodsTypes {
   accessKey:string
+}
+export type CountryCode = 'FI' | 'EE' | 'LV' | 'LT'
+interface Bank {
+  bic: string
+  name: string
+  logo_url: string
+}
+export type BankList = {
+  [key in CountryCode]: Bank[]
 }

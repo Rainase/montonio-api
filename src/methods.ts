@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { config } from './config';
-import { Credentials, PayloadOpts, UserOpts } from './types';
+import { BankList, CountryCode, Credentials, PayloadOpts, UserOpts } from './types';
 export const makePaymentUrl = (
   { secrectKey, accessKey, sandbox }: Credentials,
   {
@@ -30,7 +30,12 @@ export const makePaymentUrl = (
   return paymentUrl;
 };
 
-export const getMethods = async ({accessKey, secrectKey, sandbox}:Credentials, lang:string) => {
+/**
+ * Displaying the List of Available Banks
+ * Pass a country_code to get banks for specific country e.g 'FI' | 'EE' | 'LV' | 'LT'
+ * @returns List of available banks for a merchant.
+ */
+export const getMethods = async ({accessKey, secrectKey, sandbox}:Credentials, lang:CountryCode) => {
   const baseUrl = sandbox ? config.sandboxMethods : config.prodcutionMethods
   try {
     const payload = {
@@ -42,7 +47,7 @@ export const getMethods = async ({accessKey, secrectKey, sandbox}:Credentials, l
     { algorithm: 'HS256', expiresIn: '1h' }
   );
   const resp = await axios(baseUrl, {headers: {'Authorization': `Bearer ${token}`}})
-  if(lang === '') return resp.data
+  if(!lang) return resp.data
   return resp.data[lang]
   } catch (error) {
   return error
